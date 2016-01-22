@@ -61,7 +61,10 @@ class App
         $r->match('GET', '/debug/([\d\w]+)', '\Rnt\Controller::debug');
         $r->match('GET', '/session/start', '\Rnt\Controller::sessionStart');
         $r->match('GET', '/session/finish', '\Rnt\Controller::sessionClose');
-        $r->match('GET', '/session/([\d]+)', '\Rnt\Controller::session');
+        $r->match('GET', '/session/([\d\w]+)', '\Rnt\Controller::session');
+        $r->match('GET', '/session', '\Rnt\Controller::session');
+        $r->match('GET', '/.+', '\Rnt\Controller::void');
+
 
         ob_start();
         $r->run();

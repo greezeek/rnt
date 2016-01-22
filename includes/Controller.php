@@ -24,11 +24,27 @@ class Controller
         require __DIR__ . '/../views/index.php';
     }
 
-    public static function session($id)
+    public static function void()
     {
-        $session = App::getInstance()->getSession($id);
+        header("Location: /"); exit();
+
+    }
+
+    public static function session($id = false)
+    {
+        $id = intval($id);
+        if($id <= 0) {
+            $session = App::getInstance()->getSession($id);
+            if($session) {
+                header("Location: /session/$session->id/"); exit();
+            } else {
+                header("Location: /"); exit();
+            }
+        } else {
+            $session = App::getInstance()->getSession($id);
+        }
         if(!$session) {
-            $err = 'Session not found';
+          $message = 'Session not found';
           require __DIR__ . '/../views/nosession.php';
           return;
         }
@@ -49,25 +65,28 @@ class Controller
         App::getInstance()->db->query("INSERT INTO session SET start=NOW()");
         $q = App::getInstance()->db->prepare('SELECT * FROM session WHERE end is null');
         $q->execute();
-        $session = $q->fetchObject();
-      } else {
-        $session = $q->fetchObject();
       }
+      $session = $q->fetchObject();
       header("Location: /session/$session->id/"); exit();
     }
 
     public static function sessionClose()
     {
         if(!$session = App::getInstance()->getSession()) {
-            $err = 'session not found';
-            require __DIR__ . '/../views/nosession.php';
-            return;
+            header("Location: /"); exit();
         }
 
         if(App::getInstance()->closeSession($session->id)) {
 
             $b = new \Rnt\Heartbeat;
             $beat = $b->getBeat($session->id);
+
+            if(!$beat) {
+                $message = 'No heartbeat';
+                require __DIR__ . '/../views/nosession.php';
+                return;
+            }
+
             $peak = \Rnt\Heartbeat::getPeaks($beat);
 
             $gif = [];
@@ -75,48 +94,29 @@ class Controller
 
             $q = '';
             foreach($peak as $p) {
-
                 $dtStart = new \DateTime($p->start);
                 $dtEnd = new \DateTime($p->end);
                 $file = App::getInstance()->c['generate.gif']($session->id, $dtStart, $dtEnd);
                 $preview = App::getInstance()->c['generate.thumb']($session->id, $dtStart, $dtEnd);
-                $gif[] = $file;
-                $thumb[] = $preview;
-
-
-
                 $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$preview')";
             }
-
-
-
             $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
-
             App::getInstance()->db->query($q);
-
             header("Location: /session/$session->id/"); exit();
         }
 
-        $err = 'session not closed';
+        $message = 'session not closed';
         require __DIR__ . '/../views/nosession.php';
     }
 
     public static function debug($id) {
-
-
-
         $b = new \Rnt\Heartbeat;
         $beat = $b->getBeat();
         $peak = \Rnt\Heartbeat::getPeaks($beat);
-
         foreach ($beat as $tick) {
-
             $beats[] = $tick['beat'];
             $peaks[] = (isset($peak[$tick['dt']])) ? 50 : 0;
-
         }
-
-
         require __DIR__ . '/../views/debug.php';
     }
 
