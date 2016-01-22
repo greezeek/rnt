@@ -71,9 +71,7 @@ $c['generate.jpg'] = $c->protect(function (UploadedFile $file) {
     return new UploadedFile($path, $name);
 });
 
-$c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end) use ($c) {
-    $startTs = $start->getTimestamp();
-    $endTs = $end->getTimestamp();
+$c['generate.gif'] = $c->protect(function ($id, $startTs, $endTs) use ($c) {
 
     if ($startTs > $endTs) {
         throw new \Exception(sprintf('Start "%s" cannot be greater or equal End "%s" ', $startTs, $endTs));
@@ -109,9 +107,7 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
     return $name;
 });
 
-$c['generate.thumb'] = $c->protect(function($id, \DateTime $start, \DateTime $end) use ($c) {
-    $startTs = $start->getTimestamp();
-    $endTs = $end->getTimestamp();
+$c['generate.thumb'] = $c->protect(function($id, $startTs, $endTs) use ($c) {
     
     /** @var \Doctrine\DBAL\Connection $db */
     $db = $c['db'];

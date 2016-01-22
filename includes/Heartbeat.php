@@ -87,7 +87,7 @@ class Heartbeat
             $workoutInsert = '';
 
             foreach ($workout->hrs as $hr) {
-                $workoutInsert .= ($workoutInsert ? ', ' : '') . "('$workout->workout_id', '$session', '" . date('Y-m-d H:i:s', $hr['dt']) . "', '{$hr['beat']}')";
+                $workoutInsert .= ($workoutInsert ? ', ' : '') . "('$workout->workout_id', '$session', " . $hr['dt'] . ", '{$hr['beat']}')";
             }
 
             App::getInstance()->db->query('INSERT INTO heartbeat (workoutId, session, dt, beat) VALUES ' . $workoutInsert);

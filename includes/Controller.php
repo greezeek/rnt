@@ -102,11 +102,9 @@ class Controller
 
             $q = '';
             foreach($peak as $p) {
-                $dtStart = new \DateTime($p->start);
-                $dtEnd = new \DateTime($p->end);
-                $file = App::getInstance()->c['generate.gif']($session->id, $dtStart, $dtEnd);
-                $preview = App::getInstance()->c['generate.thumb']($session->id, $dtStart, $dtEnd);
-                $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$preview')";
+                $file = App::getInstance()->c['generate.gif']($session->id, $p->start, $p->end);
+                $preview = App::getInstance()->c['generate.thumb']($session->id, $p->start, $p->end);
+                $q .= ($q ? ', ' : '') . "('$session->id', $p->start, $p->end, '$file', '$preview')";
             }
             $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
             App::getInstance()->db->query($q);
