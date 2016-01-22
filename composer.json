@@ -1,0 +1,11 @@
+{
+    "name": "rnt/rnt",
+    "authors": [
+        {
+            "name": "Maxim Grizik",
+            "email": "grizikmm@eruditor-group.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
