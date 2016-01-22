@@ -22,15 +22,12 @@ class Heartbeat
 
     public static function getPeaks($graph)
     {
-
         $peaks = [];
-
         for ($i = 0; $i < count($graph); $i++) {
-            if($i > 0 && $i < (count($graph) - 1)) {
-
+            if ($i > 0 && $i < (count($graph) - 1)) {
                 if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
                     $peaks[$graph[$i]['dt']] = (object)[
-                        'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 3]['dt'] : $graph[0]['dt'],
+                        'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 5]['dt'] : $graph[0]['dt'],
                         'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt'] : $graph[max(array_keys($graph))]['dt']
                     ];
                 }
@@ -40,14 +37,26 @@ class Heartbeat
     }
 
 
+    public function checkWorkoutExists($workoutId)
+    {
+        $q = App::getInstance()->db->prepare('SELECT * FROM heartbeat where workoutId = :workoutid');
+        $q->bindParam(':workoutid', $workoutId);
+        $q->execute();
+        return $q->rowCount();
+    }
+
+
     public function getBeat($session = false)
     {
         $workout = false;
 
         $workout_id = $this->getLastWorkoutId();
 
-        $q = App::getInstance()->db->prepare('SELECT id, dt, beat FROM heartbeat WHERE workoutId = :workoutid or session = :session order by dt');
-        $q->bindParam(':workoutid', $workout_id, \PDO::PARAM_STR);
+        if ($this->checkWorkoutExists($workout_id)) {
+            return false;
+        }
+
+        $q = App::getInstance()->db->prepare('SELECT id, dt, beat FROM heartbeat WHERE session = :session order by dt');
         $q->bindParam(':session', $session, \PDO::PARAM_STR);
         $q->execute();
 
