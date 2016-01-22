@@ -1,8 +1,9 @@
-sess <?=$id; ?> ll
-
 <div class="container">
   <div class="section">
-    <br><br>
+    <h1><?=$id; ?></h1>
+    <div class="fixed-action-btn horizontal">
+      <a class="waves-effect waves-light btn-floating btn-large red"><i class="material-icons left">stop</i>Stop</a>
+    </div>
     <canvas id="canvas" height="450" width="600"></canvas>
     <script>
   		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
@@ -67,6 +68,5 @@ sess <?=$id; ?> ll
       </div>
     </div>
     <br><br>
-    <a href="#" id="download-button" class="btn-large waves-effect waves-light red">Остановить</a>
   </div>
 </div>
