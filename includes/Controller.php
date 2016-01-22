@@ -59,7 +59,7 @@ class Controller
             return;
         }
 
-        if(App::getInstance()->closeSession($session->id)) {
+        if(true/*App::getInstance()->closeSession($session->id)*/) {
 
             $b = new \Rnt\Heartbeat;
             $beat = $b->getBeat($session->id);
@@ -78,13 +78,19 @@ class Controller
                 $gif[] = $file;
                 $thumb[] = $preview;
 
+
+
                 $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$preview')";
             }
+
+            var_dump($gif);
+            var_dump($thumb);
 
             $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
 
             App::getInstance()->db->query($q);
 
+            die;
 
             header("Location: /session/$session->id/"); exit();
         }
