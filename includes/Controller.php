@@ -59,7 +59,7 @@ class Controller
             return;
         }
 
-        if(true/*App::getInstance()->closeSession($session->id)*/) {
+        if(App::getInstance()->closeSession($session->id)) {
 
             $b = new \Rnt\Heartbeat;
             $beat = $b->getBeat($session->id);
