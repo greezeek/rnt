@@ -36,7 +36,7 @@
                       <p><?= $session->name ?></p>
                   </div>
                   <div class="card-action">
-                      <a href="#">Посмотреть</a>
+                      <a href="/session/<?= $session->id ?>">Посмотреть</a>
                   </div>
               </div>
           </div>
