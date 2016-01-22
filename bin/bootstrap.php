@@ -1,7 +1,4 @@
 <?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
 use Pimple\Container;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Configuration;

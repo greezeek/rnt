@@ -24,10 +24,11 @@ class Controller
         require __DIR__ . '/../views/index.php';
     }
 
-    public static function session($id) 
+    public static function session($id)
     {
         $session = App::getInstance()->getSession($id);
         if(!$session) {
+            $err = 'Session not found';
           require __DIR__ . '/../views/nosession.php';
           return;
         }
@@ -49,8 +50,49 @@ class Controller
       }
       header("Location: /session/$session->id/"); exit();
     }
-  
+
+    public static function sessionClose()
+    {
+        if(!$session = App::getInstance()->getSession()) {
+            $err = 'session not found';
+            require __DIR__ . '/../views/nosession.php';
+            return;
+        }
+
+        if(App::getInstance()->closeSession($session->id)) {
+
+            $b = new \Rnt\Heartbeat;
+            $beat = $b->getBeat($session->id);
+            $peak = \Rnt\Heartbeat::getPeaks($beat);
+
+            $gif = [];
+            $thumb = [];
+
+            $q = '';
+            foreach($peak as $p) {
+                $file = App::getInstance()->c['generate.gif']($session->id, new \DateTime($p['start']), new \DateTime($p['start']));
+                $preview = App::getInstance()->c['generate.thumb']($session->id);
+                $gif[] = $file;
+                $thumb[] = $preview;
+
+                $q .= ($q ? ', ' : '') . "('$session->id', '{$p['start']}', '{$p['end']}', '$file', '$thumb')";
+            }
+
+            $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
+
+            App::getInstance()->db->query($q);
+
+
+            header("Location: /session/$session->id/"); exit();
+        }
+
+        $err = 'session not closed';
+        require __DIR__ . '/../views/nosession.php';
+    }
+
     public static function debug($id) {
+
+
 
         $b = new \Rnt\Heartbeat;
         $beat = $b->getBeat();
