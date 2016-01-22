@@ -2,5 +2,5 @@
 htpasswd
 .idea
 /vendor/
-config/
-webroot/images
+config/*
+webroot/images/*
