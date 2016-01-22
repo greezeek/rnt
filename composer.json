@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "name": "rnt/rnt",
     "authors": [
         {
@@ -8,28 +7,19 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+      "symfony/console": "v3.0.*",
+      "doctrine/dbal": "v2.5.*",
+      "pimple/pimple": "v3.0.*",
+      "symfony/http-foundation": "v3.0.*",
+      "symfony/finder": "v3.0.*",
+      "symfony/filesystem": "v3.0.*"
+    },
+    "require-dev": {
+      "symfony/var-dumper": "*"
+    },
     "autoload": {
         "psr-4": {"Rnt\\": "includes/"}
     }
-=======
-  "name": "1/daemon",
-  "authors": [
-    {
-      "name": "team1",
-      "email": "team1@mail.ru"
-    }
-  ],
-  "require": {
-    "symfony/console": "v3.0.*",
-    "doctrine/dbal": "v2.5.*",
-    "pimple/pimple": "v3.0.*",
-    "symfony/http-foundation": "v3.0.*",
-    "symfony/finder": "v3.0.*",
-    "symfony/filesystem": "v3.0.*"
-  },
-  "require-dev": {
-    "symfony/var-dumper": "*"
-  }
->>>>>>> Демон по обработке и загрузке скриншотов
+
 }
