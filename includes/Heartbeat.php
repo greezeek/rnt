@@ -24,7 +24,7 @@ class Heartbeat
     {
         $peaks = [];
         for ($i = 0; $i < count($graph); $i++) {
-            if ($i > 0 && $i < (count($graph) - 1)) {
+            if ($i > 10 && $i < (count($graph) - 1)) {
                 if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
                     $peaks[$graph[$i]['dt']] = (object)[
                         'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 5]['dt'] : $graph[0]['dt'],
@@ -33,7 +33,18 @@ class Heartbeat
                 }
             }
         }
-        return $peaks;
+
+        $j = 0;
+
+        $index = array_rand(array_keys($peaks));
+        $res = [];
+
+        while($j < 5) {
+            $res[$index[$j]] = $peaks[$index[$j]];
+            $j++;
+        }
+
+        return $res;
     }
 
 
