@@ -203,7 +203,7 @@ $c['generate.thumb'] = $c->protect(function($id) use ($c) {
     $frame = new Imagick($c['img_dir'] . $name);
     $frame->thumbnailImage(412, 232);
 
-    $name = uniqid(mt_rand(), true) . '.gif';
+    $name = uniqid(mt_rand(), true) . '.jpg';
     $frame->writeImages($c['img_dir'] . $name, true);
     
     return $name;
