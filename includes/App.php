@@ -63,17 +63,11 @@ class App
     }
 
 
-    public function getSession($id = false)
+    public function getSession($id)
     {
-        if($id) {
-            $q = $this->db->prepare('select * from session WHERE id = :id and `end` is not null ');
-            $q->bindParam(':id', $id, \PDO::PARAM_INT);
-            $q->execute();
-
-        } else {
-            $q = $this->db->query('select * from session WHERE `end` is null');
-        }
-
-        return $q->fetch(\PDO::FETCH_ASSOC);
+        $q = $this->db->prepare('select * from session WHERE id = :id');
+        $q->bindParam(':id', $id, \PDO::PARAM_INT);
+        $q->execute();
+        return $q->fetchObject();
     }
 }
