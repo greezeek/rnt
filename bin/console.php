@@ -35,7 +35,7 @@ $console
             while (count($photos) !== 0) {
                 foreach ($photos as $k => $file) {
                     $uploadedFile = new UploadedFile($file->getRealPath(), $file->getFilename());
-                    $uploadedFile = $c['bmp2jpg']($uploadedFile);
+                    $uploadedFile = $c['generate.jpg']($uploadedFile);
 
                     try {
                         $name = $c['upload']($uploadedFile);

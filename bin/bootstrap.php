@@ -12,6 +12,7 @@ $c = new Container();
 $c['web_dav.host'] = 'http://rnt.test.shot.x340.org:5285/';
 $c['web_dav.user'] = 'rnt';
 $c['web_dav.pass'] = 'rntpass';
+$c['img_dir'] = __DIR__ . '/../htdocs/images/';
 
 $c['db'] = function () {
     return DriverManager::getConnection([
@@ -60,7 +61,7 @@ $c['find.photo'] = $c->protect(function ($dir) {
     return $photos;
 });
 
-$c['bmp2jpg'] = $c->protect(function (UploadedFile $file) {
+$c['generate.jpg'] = $c->protect(function (UploadedFile $file) {
     $p_sFile = $file->getRealPath();
 
     //    Load the image into a string 
@@ -150,6 +151,43 @@ $c['bmp2jpg'] = $c->protect(function (UploadedFile $file) {
     $name = uniqid(mt_rand(), true) . '.jpg';
     $path = sys_get_temp_dir() . '/' . $name;
     imagejpeg($image, $path, 95);
-    
+
     return new UploadedFile($path, $name);
 });
+
+$c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end) use ($c) {
+    $startTs = $start->getTimestamp();
+    $endTs = $end->getTimestamp();
+
+    if ($startTs > $endTs) {
+        throw new \Exception(sprintf('Start "%s" cannot be greater or equal End "%s" ', $startTs, $endTs));
+    }
+
+    /** @var \Doctrine\DBAL\Connection $db */
+    $db = $c['db'];
+    $stmt = $db->executeQuery('SELECT session_id, name FROM media WHERE :start <= date AND date <= :end AND session_id = :id ORDER BY id', [
+        'start' => $startTs,
+        'end' => $endTs,
+        'id' => $id . 123
+    ]);
+    
+    $media = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (count($media) !== 0) {
+        $animation = new Imagick();
+        $animation->setFormat("GIF");
+
+        foreach ($media as $photo) {
+            $frame = new Imagick($c['img_dir'] . $photo['name']);
+            $frame->thumbnailImage(176, 144);
+            $animation->addImage($frame);
+            $animation->setImageDelay(100);
+            $animation->nextImage();
+        }
+
+        $name = uniqid(mt_rand(), true) . '.gif';
+        $animation->writeImages($c['img_dir'] . $name, true);
+    }
+});
+
+
+$c['generate.gif'](1, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
