@@ -10,7 +10,7 @@
     "require": {
       "symfony/console": "v2.8.*",
       "doctrine/dbal": "v2.5.*",
-      "pimple/pimple": "v2.8.*",
+      "pimple/pimple": "v3.0.*",
       "symfony/http-foundation": "v2.8.*",
       "symfony/finder": "v2.8.*",
       "symfony/filesystem": "v2.8.*",
