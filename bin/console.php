@@ -50,6 +50,7 @@ $console
                         ]);
 
                         $fs->remove($file->getRealPath());
+                        sleep(.1);
                         unset($photos[$k]);
 
                         $output->writeln(sprintf('<info>Process sid "%s", file "%s"</info>', $id, $file->getBasename()));
