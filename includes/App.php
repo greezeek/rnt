@@ -7,6 +7,7 @@
  */
 
 namespace Rnt;
+use Bramus\Router\Router;
 
 /**
  * Class App
@@ -43,4 +44,27 @@ class App
         return isset($this->storage[$var]) ? $this->storage[$var] : null;
     }
 
+
+    public function route()
+    {
+        $r = new Router();
+
+        $r->match('GET', '/', '\Rnt\Controller::index');
+        $r->match('GET', '/debug/([\d\w]+)', '\Rnt\Controller::debug');
+        $r->match('GET', '/([\d\w]+)', '\Rnt\Controller::session');
+
+
+        ob_start();
+        $r->run();
+        $content = ob_get_contents();
+        ob_clean();
+
+        include __DIR__ . "/../views/layout.php";
+    }
+
+
+    public function getOpenSession()
+    {
+        $q = $this->db->prepare('select * from session WHERE');
+    }
 }
