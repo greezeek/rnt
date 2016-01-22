@@ -1,4 +1,7 @@
 <?php
+
+//require_once __DIR__ . '/../vendor/autoload.php';
+
 use Pimple\Container;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Configuration;
@@ -211,5 +214,5 @@ $c['generate.thumb'] = $c->protect(function($id, \DateTime $start, \DateTime $en
     return $name;
 });
 
-//$c['generate.thumb'](1);
-//$c['generate.gif'](1, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
+//$c['generate.thumb'](15, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
+//$c['generate.gif'](15, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
