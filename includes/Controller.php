@@ -78,7 +78,7 @@ class Controller
                 $gif[] = $file;
                 $thumb[] = $preview;
 
-                $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$thumb')";
+                $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$preview')";
             }
 
             $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
