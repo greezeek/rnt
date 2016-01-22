@@ -179,7 +179,7 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
             $frame = new Imagick($c['img_dir'] . $photo['name']);
             $frame->thumbnailImage(400, 300);
             $animation->addImage($frame);
-            $animation->setImageDelay(100);
+            $animation->setImageDelay(50);
             $animation->nextImage();
         }
 
@@ -190,10 +190,15 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
     return $name;
 });
 
-$c['generate.thumb'] = $c->protect(function($id) use ($c) {
+$c['generate.thumb'] = $c->protect(function($id, \DateTime $start, \DateTime $end) use ($c) {
+    $startTs = $start->getTimestamp();
+    $endTs = $end->getTimestamp();
+    
     /** @var \Doctrine\DBAL\Connection $db */
     $db = $c['db'];
-    $stmt = $db->executeQuery('SELECT name FROM media WHERE session_id = :id ORDER BY date LIMIT 1', [
+    $stmt = $db->executeQuery('SELECT name FROM media WHERE :start <= date AND date <= :end AND session_id = :id ORDER BY date LIMIT 1', [
+        'start' => $startTs,
+        'end' => $endTs,
         'id' => $id
     ]);
     $name = $stmt->fetchColumn();
