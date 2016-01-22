@@ -13,7 +13,8 @@
       "pimple/pimple": "v3.0.*",
       "symfony/http-foundation": "v3.0.*",
       "symfony/finder": "v3.0.*",
-      "symfony/filesystem": "v3.0.*"
+      "symfony/filesystem": "v3.0.*",
+        "bramus/router": "~1.0"
     },
     "require-dev": {
       "symfony/var-dumper": "*"
