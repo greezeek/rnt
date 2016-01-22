@@ -17,18 +17,12 @@ class Controller
 
     }
 
-    public static function session($id = false) {
-
-
+    public static function session($id) 
+    {
         $session = App::getInstance()->getSession($id);
-
         if(!$session) {
-            require __DIR__ . '/../views/nosession.php';
-            return;
-        }
-
-        if (!$id) {
-            // calc peaks
+          require __DIR__ . '/../views/nosession.php';
+          return;
         }
 
         require __DIR__ . '/../views/session.php';
