@@ -55,7 +55,27 @@
 .card-img .card-image {
   max-height: 100% !important;
 }
+.card-img .card-image a {
+  position: relative;
+  display: block;
+}
+.card-img .card-image i.material-icons {
+  position: absolute;
+  display: block;
+  font-size: 80px;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  margin-left: -40px;
+  margin-top: -40px;
+  z-index: 2;
+  opacity: 0.6;
+  transition: opacity 300ms linear;
+}
 
+.card-img .card-image a:hover i.material-icons {
+  opacity: 0.8;
+}
 
 #wave {
     stroke-dasharray: 50 520;
