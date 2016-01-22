@@ -25,48 +25,65 @@
   <br><br>
     <!--   Icon Section   -->
     <div class="row">
-      <div class="col s12 m4">
-        <div class="card small">
-            <div class="card-image">
-              <img src="http://www.wareable.com/media/images/2014/10/aaaafortheawesome-1412334292-8otB-column-width-inline.jpg">
-              <span class="card-title">Качели</span>
-            </div>
-            <div class="card-content">
-              <p>Иван Иванов</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Посмотреть</a>
-            </div>
+      <?php foreach($data as $session): ?>
+          <div class="col s12 m4">
+              <div class="card small">
+                  <div class="card-image">
+                      <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>">
+                      <span class="card-title"><?= $session->name ?></span>
+                  </div>
+                  <div class="card-content">
+                      <p><?= $session->name ?></p>
+                  </div>
+                  <div class="card-action">
+                      <a href="#">Посмотреть</a>
+                  </div>
+              </div>
           </div>
-      </div>
-      <div class="col s12 m4">
-        <div class="card small">
-            <div class="card-image">
-              <img src="http://www.wareable.com/media/images/2014/10/windlands-oculus-rift-1-1412334393-0NUf-column-width-inline.jpg">
-              <span class="card-title">Хоррор</span>
-            </div>
-            <div class="card-content">
-              <p>Петр Петров</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Посмотреть</a>
-            </div>
-          </div>
-      </div>
-      <div class="col s12 m4">
-        <div class="card small">
-            <div class="card-image">
-              <img src="http://www.wareable.com/media/images/2014/10/vanguard-v-4-1-1412334418-pFCs-column-width-inline.jpg">
-              <span class="card-title">Полет</span>
-            </div>
-            <div class="card-content">
-              <p>Константин Константинопольский</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Посмотреть</a>
-            </div>
-          </div>
-      </div>
+      <?php endforeach; ?>
+        
+<!--      <div class="col s12 m4">-->
+<!--        <div class="card small">-->
+<!--            <div class="card-image">-->
+<!--              <img src="http://www.wareable.com/media/images/2014/10/aaaafortheawesome-1412334292-8otB-column-width-inline.jpg">-->
+<!--              <span class="card-title">Качели</span>-->
+<!--            </div>-->
+<!--            <div class="card-content">-->
+<!--              <p>Иван Иванов</p>-->
+<!--            </div>-->
+<!--            <div class="card-action">-->
+<!--              <a href="#">Посмотреть</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--      <div class="col s12 m4">-->
+<!--        <div class="card small">-->
+<!--            <div class="card-image">-->
+<!--              <img src="http://www.wareable.com/media/images/2014/10/windlands-oculus-rift-1-1412334393-0NUf-column-width-inline.jpg">-->
+<!--              <span class="card-title">Хоррор</span>-->
+<!--            </div>-->
+<!--            <div class="card-content">-->
+<!--              <p>Петр Петров</p>-->
+<!--            </div>-->
+<!--            <div class="card-action">-->
+<!--              <a href="#">Посмотреть</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--      <div class="col s12 m4">-->
+<!--        <div class="card small">-->
+<!--            <div class="card-image">-->
+<!--              <img src="http://www.wareable.com/media/images/2014/10/vanguard-v-4-1-1412334418-pFCs-column-width-inline.jpg">-->
+<!--              <span class="card-title">Полет</span>-->
+<!--            </div>-->
+<!--            <div class="card-content">-->
+<!--              <p>Константин Константинопольский</p>-->
+<!--            </div>-->
+<!--            <div class="card-action">-->
+<!--              <a href="#">Посмотреть</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
     </div>
   </div>
 </div>
