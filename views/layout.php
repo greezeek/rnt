@@ -11,7 +11,7 @@
   <link href="/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 </head>
-<body>
+<body style='overflow-x: hidden'>
   <nav class="black lighten-1" role="navigation">
     <div class="nav-wrapper container">
       <a href="/" id="logo-container" class="brand-logo">
