@@ -8,10 +8,10 @@
 
 
 return [
-  'db' => [
-      'host' => 'localhost',
-      'db' => 'rnt',
-      'user' => 'rnt',
-      'pass' => 'rnt'
-  ]
+    'db' => [
+        'host' => 'http://rnt.test.shot.x340.org/',
+        'db' => 'rnt',
+        'user' => 'rnt',
+        'pass' => 'rnt'
+    ]
 ];

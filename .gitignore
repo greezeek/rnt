@@ -2,3 +2,4 @@
 htpasswd
 .idea
 /vendor/
+config/
