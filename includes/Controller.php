@@ -33,6 +33,11 @@ class Controller
           return;
         }
 
+        $q = App::getInstance()->db->prepare("SELECT * FROM finish WHERE session_id=$session->id ORDER BY ID");
+        $q->execute();
+        
+        $images = $q->fetchAll(\PDO::FETCH_OBJ);
+
         require __DIR__ . '/../views/session.php';
     }
 

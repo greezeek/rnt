@@ -31,13 +31,13 @@
           <div class="col s12 m4">
               <div class="card small">
                   <div class="card-image">
-                      <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>" height="180">
+                      <a href="/session/<?= $session->id?>"><img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>" height="180"></a>
                   </div>
                   <div class="card-content">
                     <p><b>Session #<?=$session->id?></b>: <?=date('d M H:i',strtotime($session->start))?></p> 
                   </div>
                   <div class="card-action">
-                      <a href="/session/<?= $session->id ?>">Посмотреть</a>
+                      <a href="/session/<?= $session->id?>">Посмотреть</a>
                   </div>
               </div>
           </div>
