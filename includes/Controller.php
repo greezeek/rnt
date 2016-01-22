@@ -74,7 +74,7 @@ class Controller
                 $dtStart = new \DateTime($p->start);
                 $dtEnd = new \DateTime($p->end);
                 $file = App::getInstance()->c['generate.gif']($session->id, $dtStart, $dtEnd);
-                $preview = App::getInstance()->c['generate.thumb']($session->id);
+                $preview = App::getInstance()->c['generate.thumb']($session->id, $dtStart, $dtEnd);
                 $gif[] = $file;
                 $thumb[] = $preview;
 
