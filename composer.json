@@ -8,12 +8,12 @@
     ],
     "minimum-stability": "dev",
     "require": {
-      "symfony/console": "v3.0.*",
+      "symfony/console": "v2.8.*",
       "doctrine/dbal": "v2.5.*",
       "pimple/pimple": "v3.0.*",
-      "symfony/http-foundation": "v3.0.*",
-      "symfony/finder": "v3.0.*",
-      "symfony/filesystem": "v3.0.*",
+      "symfony/http-foundation": "v2.8.*",
+      "symfony/finder": "v2.8.*",
+      "symfony/filesystem": "v2.8.*",
         "bramus/router": "~1.0"
     },
     "require-dev": {
