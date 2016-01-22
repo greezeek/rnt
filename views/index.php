@@ -13,7 +13,7 @@
         <h5 class="header col s12 light white-text">Какой-нибудь умный текст</h5>
       </div>
       <div class="row center">
-        <a href="#" id="download-button" class="btn-large waves-effect waves-light red">Начать</a>
+        <a href="/session/start/" id="download-button" class="btn-large waves-effect waves-light red">Начать</a>
       </div>
     </div>
   </div>

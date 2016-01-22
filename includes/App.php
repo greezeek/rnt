@@ -51,6 +51,7 @@ class App
 
         $r->match('GET', '/', '\Rnt\Controller::index');
         $r->match('GET', '/debug/([\d\w]+)', '\Rnt\Controller::debug');
+        $r->match('GET', '/session/start', '\Rnt\Controller::sessionStart');
         $r->match('GET', '/session/([\d\w]+)', '\Rnt\Controller::session');
 
         ob_start();
