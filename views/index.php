@@ -30,11 +30,10 @@
               <div class="card small">
                   <div class="card-image">
                       <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>">
-                      <span class="card-title"><?= $session->name ?></span>
                   </div>
-<!--                  <div class="card-content">-->
-<!--                      <p>--><!--</p>-->
-<!--                  </div>-->
+                  <div class="card-content">
+                    <p>Session #<?=$session->id?></p>
+                  </div>
                   <div class="card-action">
                       <a href="/session/<?= $session->id ?>">Посмотреть</a>
                   </div>
