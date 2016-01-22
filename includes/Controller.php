@@ -11,10 +11,17 @@ namespace Rnt;
 
 class Controller
 {
-    public static function index() {
-
+    public static function index()
+    {
+        $stmt = App::getInstance()->db->query('
+          SELECT s.*, m.name AS "thumb"
+          FROM session s 
+          INNER JOIN (SELECT session_id, name, MIN(date) FROM media GROUP BY session_id) m ON m.session_id = s.id  
+          WHERE s.end IS NOT NULL
+          ORDER BY s.id DESC');
+        $data = $stmt->fetchAll(\PDO::FETCH_OBJ);
+        
         require __DIR__ . '/../views/index.php';
-
     }
 
     public static function session($id) 
