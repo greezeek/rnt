@@ -1,0 +1,66 @@
+
+.logo {
+  fill: white;
+}
+
+.section {
+  padding-top: 0;
+}
+
+.start {
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  top: 20%;
+}
+
+.container-video {
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.video-bg-wrap .video-overlay {
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: 1;
+}
+
+.video-bg-wrap .video-bg {
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.card-img {
+  height: auto !important;
+}
+.card-img .card-image {
+  max-height: 100% !important;
+}
+
+
+#wave {
+    stroke-dasharray: 50 520;
+    stroke-dashoffset: 50;
+    animation: dash 1.5s linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes dash {
+    from {
+        stroke-dashoffset: 50;
+    }
+    to {
+        stroke-dashoffset: -520;
+    }
+}
