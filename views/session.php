@@ -13,7 +13,7 @@
     </div>
     <?if (!$session->end):?>
       <br><br>
-      <a href="/session/finish/" id="download-button" class="btn-large waves-effect waves-light red">Остановить</a>
+      <a href="/session/finish/" id="download-button" class="btn-large waves-effect waves-light red">Finish</a>
     <?else:?>
       <h3>Moments:</h3>
       <div class="row">
