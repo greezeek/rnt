@@ -13,38 +13,46 @@ class Heartbeat
 {
 
     private $sessionkey;
+    const OFFSET = 12;
 
-
-    private static function isExtr($hr1, $hr2, $hr3)
+    private static function isExtr(&$graph, &$i, $maxval = 0)
     {
-        return ($hr1 <= $hr2 && $hr3 < $hr2);
+        $max = $i;
+        $maxval = $graph[$i]['beat'];
+        $leftOffset = $i;
+        $rightOffset = (($i + self::OFFSET) > count($graph)) ? count($graph) : ($i + self::OFFSET);
+
+        for($j = $leftOffset; $j < $rightOffset; $j++) {
+
+            if($graph[$j]['beat'] > $maxval  ) {
+                $max = $j;
+                $maxval = $graph[$j]['beat'];
+            }
+        }
+
+        if($i != $max) {
+            $i = $max;
+            return self::isExtr($graph, $i, $maxval);
+        }
+        return true;
     }
 
     public static function getPeaks($graph)
     {
         $peaks = [];
-        for ($i = 0; $i < count($graph); $i++) {
-            if ($i > 10 && $i < (count($graph) - 1)) {
-                if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
-                    $peaks[$graph[$i]['dt']] = (object)[
-                        'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 5]['dt'] : $graph[0]['dt'],
-                        'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt'] : $graph[max(array_keys($graph))]['dt']
-                    ];
-                }
+        $i = 1;
+        while($i < count($graph)) {
+            if (self::isExtr($graph, $i)) {
+
+                $peaks[$graph[$i]['dt']] = (object)[
+                    'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 5]['dt'] : $graph[0]['dt'],
+                    'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt'] : $graph[max(array_keys($graph))]['dt']
+                ];
             }
+            $i += self::OFFSET ;
+
         }
-
-        $j = 0;
-
-        $index = array_rand(array_keys($peaks));
-        $res = [];
-
-        while($j < 5) {
-            $res[$index[$j]] = $peaks[$index[$j]];
-            $j++;
-        }
-
-        return $res;
+        return $peaks;
     }
 
 
@@ -61,12 +69,6 @@ class Heartbeat
     {
         $workout = false;
 
-        $workout_id = $this->getLastWorkoutId();
-
-        if ($this->checkWorkoutExists($workout_id)) {
-            return false;
-        }
-
         $q = App::getInstance()->db->prepare('SELECT id, dt, beat FROM heartbeat WHERE session = :session order by dt');
         $q->bindParam(':session', $session, \PDO::PARAM_STR);
         $q->execute();
@@ -76,6 +78,11 @@ class Heartbeat
         }
 
         if (!$workout) {
+            $workout_id = $this->getLastWorkoutId();
+
+            if ($this->checkWorkoutExists($workout_id)) {
+                return false;
+            }
             $workout = $this->getWorkout($workout_id);
             $workoutInsert = '';
 

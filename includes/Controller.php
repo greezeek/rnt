@@ -119,8 +119,10 @@ class Controller
 
     public static function debug($id) {
         $b = new \Rnt\Heartbeat;
-        $beat = $b->getBeat();
+        $beat = $b->getBeat(16);
         $peak = \Rnt\Heartbeat::getPeaks($beat);
+
+        var_dump($peak);
         foreach ($beat as $tick) {
             $beats[] = $tick['beat'];
             $peaks[] = (isset($peak[$tick['dt']])) ? 50 : 0;
