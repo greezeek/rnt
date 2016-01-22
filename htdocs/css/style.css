@@ -1,6 +1,8 @@
 
 .logo {
-  fill: white;
+  width: 210px;
+  position: relative;
+  top: -45px;
 }
 
 .section {
