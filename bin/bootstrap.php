@@ -165,20 +165,22 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
 
     /** @var \Doctrine\DBAL\Connection $db */
     $db = $c['db'];
-    $stmt = $db->executeQuery('SELECT session_id, name FROM media WHERE :start <= date AND date <= :end AND session_id = :id ORDER BY id', [
+    $stmt = $db->executeQuery('SELECT session_id, name FROM media WHERE :start <= date AND date <= :end AND session_id = :id ORDER BY date', [
         'start' => $startTs,
         'end' => $endTs,
-        'id' => $id . 123
+        'id' => $id
     ]);
     
+    $name = null;
     $media = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
     if (count($media) !== 0) {
         $animation = new Imagick();
         $animation->setFormat("GIF");
 
         foreach ($media as $photo) {
             $frame = new Imagick($c['img_dir'] . $photo['name']);
-            $frame->thumbnailImage(176, 144);
+            $frame->thumbnailImage(400, 300);
             $animation->addImage($frame);
             $animation->setImageDelay(100);
             $animation->nextImage();
@@ -187,7 +189,8 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
         $name = uniqid(mt_rand(), true) . '.gif';
         $animation->writeImages($c['img_dir'] . $name, true);
     }
+    
+    return $name;
 });
 
-
-$c['generate.gif'](1, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
+//$c['generate.gif'](1, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
