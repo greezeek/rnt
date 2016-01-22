@@ -28,7 +28,7 @@ class Heartbeat
         for ($i = 0; $i < count($graph); $i++) {
             if ($i > 0) {
                 if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
-                    $peaks[] = [$graph[$i]['dt'] => $graph[$i]['beat']];
+                    $peaks[$graph[$i]['dt']] = $graph[$i]['beat'];
                 }
             }
         }
