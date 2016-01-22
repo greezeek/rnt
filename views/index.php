@@ -8,12 +8,12 @@
       </video>
     </div>
     <div class="start">
-      <h1 class="header center white-text">Лови момент</h1>
+      <h1 class="header center white-text">The moment</h1>
       <div class="row center">
-        <h5 class="header col s12 light white-text">Какой-нибудь умный текст</h5>
+        <h5 class="header col s12 light white-text">Sometimes it just takes a moment to forget a life, but sometimes life is not enough to forget for a moment.</h5>
       </div>
       <div class="row center">
-        <a href="/session/start/" id="download-button" class="btn-large waves-effect waves-light red">Начать</a>
+        <a href="/session/start/" id="download-button" class="btn-large waves-effect waves-light red">Start</a>
       </div>
     </div>
   </div>
