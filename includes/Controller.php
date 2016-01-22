@@ -54,6 +54,14 @@ class Controller
         
         $images = $q->fetchAll(\PDO::FETCH_OBJ);
 
+        $b = new \Rnt\Heartbeat;
+        $beat = $b->getBeat();
+        $peak = \Rnt\Heartbeat::getPeaks($beat);
+        foreach ($beat as $tick) {
+          $beats[] = $tick['beat'];
+          $peaks[] = (isset($peak[$tick['dt']])) ? 50 : 0;
+        }
+      
         require __DIR__ . '/../views/session.php';
     }
 
