@@ -29,7 +29,7 @@
           <div class="col s12 m4">
               <div class="card small">
                   <div class="card-image">
-                      <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>">
+                      <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>" height="180">
                   </div>
                   <div class="card-content">
                     <p>Session #<?=$session->id?></p>
@@ -40,49 +40,6 @@
               </div>
           </div>
       <?php endforeach; ?>
-        
-<!--      <div class="col s12 m4">-->
-<!--        <div class="card small">-->
-<!--            <div class="card-image">-->
-<!--              <img src="http://www.wareable.com/media/images/2014/10/aaaafortheawesome-1412334292-8otB-column-width-inline.jpg">-->
-<!--              <span class="card-title">Качели</span>-->
-<!--            </div>-->
-<!--            <div class="card-content">-->
-<!--              <p>Иван Иванов</p>-->
-<!--            </div>-->
-<!--            <div class="card-action">-->
-<!--              <a href="#">Посмотреть</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--      </div>-->
-<!--      <div class="col s12 m4">-->
-<!--        <div class="card small">-->
-<!--            <div class="card-image">-->
-<!--              <img src="http://www.wareable.com/media/images/2014/10/windlands-oculus-rift-1-1412334393-0NUf-column-width-inline.jpg">-->
-<!--              <span class="card-title">Хоррор</span>-->
-<!--            </div>-->
-<!--            <div class="card-content">-->
-<!--              <p>Петр Петров</p>-->
-<!--            </div>-->
-<!--            <div class="card-action">-->
-<!--              <a href="#">Посмотреть</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--      </div>-->
-<!--      <div class="col s12 m4">-->
-<!--        <div class="card small">-->
-<!--            <div class="card-image">-->
-<!--              <img src="http://www.wareable.com/media/images/2014/10/vanguard-v-4-1-1412334418-pFCs-column-width-inline.jpg">-->
-<!--              <span class="card-title">Полет</span>-->
-<!--            </div>-->
-<!--            <div class="card-content">-->
-<!--              <p>Константин Константинопольский</p>-->
-<!--            </div>-->
-<!--            <div class="card-action">-->
-<!--              <a href="#">Посмотреть</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--      </div>-->
     </div>
   </div>
 </div>
