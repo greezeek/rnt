@@ -15,7 +15,7 @@
   <nav class="black lighten-1" role="navigation">
     <div class="nav-wrapper container">
       <div id="logo-container" class="brand-logo">
-          <img src="logo.svg" width="60" alt="">
+          <img src="/logo.svg" width="60" alt="">
       </div>
     </div>
   </nav>
