@@ -193,4 +193,21 @@ $c['generate.gif'] = $c->protect(function ($id, \DateTime $start, \DateTime $end
     return $name;
 });
 
+$c['generate.thumb'] = $c->protect(function($id) use ($c) {
+    /** @var \Doctrine\DBAL\Connection $db */
+    $db = $c['db'];
+    $stmt = $db->executeQuery('SELECT name FROM media WHERE session_id = :id ORDER BY date LIMIT 1', [
+        'id' => $id
+    ]);
+    $name = $stmt->fetchColumn();
+    $frame = new Imagick($c['img_dir'] . $name);
+    $frame->thumbnailImage(412, 232);
+
+    $name = uniqid(mt_rand(), true) . '.gif';
+    $frame->writeImages($c['img_dir'] . $name, true);
+    
+    return $name;
+});
+
+//$c['generate.thumb'](1);
 //$c['generate.gif'](1, new \DateTime('2015-01-01 00:00:00'), new \DateTime('2016-12-01 23:59:59'));
