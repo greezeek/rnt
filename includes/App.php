@@ -7,6 +7,7 @@
  */
 
 namespace Rnt;
+
 use Bramus\Router\Router;
 
 /**
@@ -14,6 +15,7 @@ use Bramus\Router\Router;
  * @package Rnt
  *
  * @property-read \PDO $db
+ * @property-read array $c
  */
 class App
 {
@@ -22,8 +24,9 @@ class App
 
     private $storage;
 
-    public static function getInstance(){
-        if(self::$instance instanceof static) {
+    public static function getInstance()
+    {
+        if (self::$instance instanceof static) {
             return self::$instance;
         }
         return self::$instance = new static;
@@ -34,6 +37,11 @@ class App
         try {
             $this->storage['config'] = require_once __DIR__ . "/../config/config.php";
             $this->storage['db'] = new \PDO('mysql:dbname=' . $this->config['db']['db'] . ';host=' . $this->config['db']['host'], $this->config['db']['user'], $this->config['db']['pass']);
+
+            require_once __DIR__ . '/../bin/bootstrap.php';
+
+            $this->storage['c'] = $c;
+
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -52,8 +60,8 @@ class App
         $r->match('GET', '/', '\Rnt\Controller::index');
         $r->match('GET', '/debug/([\d\w]+)', '\Rnt\Controller::debug');
         $r->match('GET', '/session/start', '\Rnt\Controller::sessionStart');
-      
-        $r->match('GET', '/session/([\d\w]+)', '\Rnt\Controller::session');
+        $r->match('GET', '/session/finish', '\Rnt\Controller::sessionClose');
+        $r->match('GET', '/session/([\d]+)', '\Rnt\Controller::session');
 
         ob_start();
         $r->run();
@@ -64,11 +72,31 @@ class App
     }
 
 
-    public function getSession($id)
+    public function getSession($id = false)
     {
-        $q = $this->db->prepare('select * from session WHERE id = :id');
-        $q->bindParam(':id', $id, \PDO::PARAM_INT);
-        $q->execute();
-        return $q->fetchObject();
+        if ($id) {
+            $q = $this->db->prepare('select * from session WHERE id = :id');
+            $q->bindParam(':id', $id, \PDO::PARAM_INT);
+            $q->execute();
+        } else {
+            $q = $this->db->query('select * from session WHERE `end` is null');
+        }
+
+        return $q ? $q->fetchObject() : false;
     }
+
+
+    public function closeSession($id = false)
+    {
+        if ($id) {
+            $q = $this->db->prepare('UPDATE session SET end = NOW() WHERE id = :id and `end` is null ');
+            $q->bindParam(':id', $id, \PDO::PARAM_INT);
+
+            if ($q->execute() && $q->rowCount()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

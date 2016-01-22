@@ -26,26 +26,28 @@ class Heartbeat
         $peaks = [];
 
         for ($i = 0; $i < count($graph); $i++) {
-            if ($i > 0) {
-                if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
-                    $peaks[$graph[$i]['dt']] = $graph[$i]['beat'];
-                }
+
+
+            if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
+                $peaks[$graph[$i]['dt']] = (object)[
+                    'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 3]['dt']: $graph[0]['dt'],
+                    'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt']: $graph[max(array_keys($graph))]['dt']
+                ];
             }
         }
         return $peaks;
     }
 
 
-    public function getBeat($workout_id = false)
+    public function getBeat($session = false)
     {
         $workout = false;
 
-        if (!$workout_id) {
-            $workout_id = $this->getLastWorkoutId();
-        }
+        $workout_id = $this->getLastWorkoutId();
 
-        $q = App::getInstance()->db->prepare('SELECT id, dt, beat FROM heartbeat WHERE workoutId = :workoutid order by dt');
+        $q = App::getInstance()->db->prepare('SELECT id, dt, beat FROM heartbeat WHERE workoutId = :workoutid or session = :session order by dt');
         $q->bindParam(':workoutid', $workout_id, \PDO::PARAM_STR);
+        $q->bindParam(':session', $session, \PDO::PARAM_STR);
         $q->execute();
 
         if ($q->rowCount() > 0) {
@@ -57,10 +59,10 @@ class Heartbeat
             $workoutInsert = '';
 
             foreach ($workout->hrs as $hr) {
-                $workoutInsert .= ($workoutInsert ? ', ' : '') . "('$workout->workout_id', '" . date('Y-m-d H:i:s', $hr['dt']) . "', '{$hr['beat']}')";
+                $workoutInsert .= ($workoutInsert ? ', ' : '') . "('$workout->workout_id', '$session', '" . date('Y-m-d H:i:s', $hr['dt']) . "', '{$hr['beat']}')";
             }
 
-            App::getInstance()->db->query('INSERT INTO heartbeat (workoutId, dt, beat) VALUES ' . $workoutInsert);
+            App::getInstance()->db->query('INSERT INTO heartbeat (workoutId, session, dt, beat) VALUES ' . $workoutInsert);
             $workout = $workout->hrs;
         }
         return $workout;
