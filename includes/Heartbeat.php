@@ -26,13 +26,14 @@ class Heartbeat
         $peaks = [];
 
         for ($i = 0; $i < count($graph); $i++) {
+            if($i > 0 && $i < count($graph)) {
 
-
-            if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
-                $peaks[$graph[$i]['dt']] = (object)[
-                    'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 3]['dt']: $graph[0]['dt'],
-                    'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt']: $graph[max(array_keys($graph))]['dt']
-                ];
+                if (self::isExtr($graph[$i - 1]['beat'], $graph[$i]['beat'], $graph[$i + 1]['beat'])) {
+                    $peaks[$graph[$i]['dt']] = (object)[
+                        'start' => isset($graph[$i - 5]['dt']) ? $graph[$i - 3]['dt'] : $graph[0]['dt'],
+                        'end' => isset($graph[$i + 5]['dt']) ? $graph[$i + 5]['dt'] : $graph[max(array_keys($graph))]['dt']
+                    ];
+                }
             }
         }
         return $peaks;

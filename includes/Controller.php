@@ -70,12 +70,15 @@ class Controller
 
             $q = '';
             foreach($peak as $p) {
-                $file = App::getInstance()->c['generate.gif']($session->id, new \DateTime($p['start']), new \DateTime($p['start']));
+
+                $dtStart = new \DateTime($p->start);
+                $dtEnd = new \DateTime($p->end);
+                $file = App::getInstance()->c['generate.gif']($session->id, $dtStart, $dtEnd);
                 $preview = App::getInstance()->c['generate.thumb']($session->id);
                 $gif[] = $file;
                 $thumb[] = $preview;
 
-                $q .= ($q ? ', ' : '') . "('$session->id', '{$p['start']}', '{$p['end']}', '$file', '$thumb')";
+                $q .= ($q ? ', ' : '') . "('$session->id', '" . $dtStart->format('U') . "', '" . $dtEnd->format('U') . "', '$file', '$thumb')";
             }
 
             $q = 'INSERT INTO finish (session_id, start, end, gif, thumb) VALUES  ' . $q ;
