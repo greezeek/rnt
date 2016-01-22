@@ -5,6 +5,12 @@
   top: -45px;
 }
 
+.brand-logo {
+  height: 65px !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
 .section {
   padding-top: 0;
 }
