@@ -3,3 +3,4 @@ htpasswd
 .idea
 /vendor/
 config/
+webroot/images
