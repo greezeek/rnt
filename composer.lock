@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fdd0e97f2672cd8a049205e81415264b",
-    "content-hash": "3d59fd84635f7646860bc82a7d80e79b",
+    "hash": "ef2af8e73719e7d44b07403a16441c37",
+    "content-hash": "eb407eddbd319c3bb8247c0984ece99a",
     "packages": [
         {
             "name": "bramus/router",
@@ -1065,8 +1065,6 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": ">=5.3.9"
-    },
+    "platform": [],
     "platform-dev": []
 }
