@@ -1,3 +1,5 @@
+
+
 <div class="section no-pad-bot" id="index-banner">
   <div class="container container-video">
     <div class="video-bg-wrap">
@@ -32,7 +34,7 @@
                       <img src="http://rnt.test.shot.x340.org/images/<?= $session->thumb ?>" height="180">
                   </div>
                   <div class="card-content">
-                    <p>Session #<?=$session->id?></p>
+                    <p><b>Session #<?=$session->id?></b>: <?=date('d M H:i',strtotime($session->start))?></p> 
                   </div>
                   <div class="card-action">
                       <a href="/session/<?= $session->id ?>">Посмотреть</a>
