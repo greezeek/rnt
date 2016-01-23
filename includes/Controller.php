@@ -88,13 +88,32 @@ class Controller
 
             $b = new \Rnt\Heartbeat;
             $beat = $b->getBeat($session->id);
-
+            
             if(!$beat) {
-                $message = 'No heartbeat';
+                $message = 'No heartbeat yet. Please restart...';
                 require __DIR__ . '/../views/nosession.php';
                 return;
             }
 
+            // проверить что для этих пиков есть картинки
+            $stmt = App::getInstance()->db->query("select min(dt) min,max(dt) max from heartbeat");
+            $stmt->execute();
+            $row = $stmt->fetchObject();
+            
+            $stmt = App::getInstance()->db->query("select count(*) from media where session_id=$session->id and $row->min <= date and date <= $row->max");
+            $stmt->execute();
+            $cols = intval($stmt->fetchColumn());
+            
+            if (!$cols) {
+                $st = App::getInstance()->db->query("update session set end = null where id=$session->id");
+                $st->execute();
+                $st = App::getInstance()->db->query("delete from heartbeat where session=$session->id");
+                $st->execute();
+                $message = 'Please wait...'."<script>window.setTimeout('window.location.reload()',2000)</script>";
+                require __DIR__ . '/../views/nosession.php';
+                return;
+            }
+            
             $peak = \Rnt\Heartbeat::getPeaks($beat);
 
             $gif = [];
