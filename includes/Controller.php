@@ -49,19 +49,19 @@ class Controller
           return;
         }
 
-        $q = App::getInstance()->db->prepare("SELECT * FROM finish WHERE session_id=$session->id ORDER BY ID");
-        $q->execute();
-        
-        $images = $q->fetchAll(\PDO::FETCH_OBJ);
-
-        $b = new \Rnt\Heartbeat;
-        $beat = $b->getBeat($session->id);
-        $peak = \Rnt\Heartbeat::getPeaks($beat);
-        foreach ($beat as $tick) {
-          $beats[] = $tick['beat'];
-          $peaks[] = (isset($peak[$tick['dt']])) ? 150 : 0;
+        if ($session->end) {
+            $q = App::getInstance()->db->prepare("SELECT * FROM finish WHERE session_id=$session->id ORDER BY ID");
+            $q->execute();
+            $images = $q->fetchAll(\PDO::FETCH_OBJ);
+            $b = new \Rnt\Heartbeat;
+            $beat = $b->getBeat($session->id);
+            $peak = \Rnt\Heartbeat::getPeaks($beat);
+            foreach ($beat as $tick) {
+                $beats[] = $tick['beat'];
+                $peaks[] = (isset($peak[$tick['dt']])) ? 150 : 0;
+            }
         }
-      
+        
         require __DIR__ . '/../views/session.php';
     }
 
